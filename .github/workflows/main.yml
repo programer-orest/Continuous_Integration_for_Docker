@@ -56,8 +56,6 @@ jobs:
           name: python-artifacts
           path: .
 
-
-
   docker-ci:
     name: Login,Build and Push Image
     needs: ['python-ci']
@@ -83,4 +81,5 @@ jobs:
           push: true
           context: ./src
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.Docker_Image_Name }}:${{ github.sha }}
+
 
