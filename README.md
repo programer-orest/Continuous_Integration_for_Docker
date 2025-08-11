@@ -1,44 +1,26 @@
-# Django ToDo List Application
+# GitHub Actions Workflow with Docker Build & Push to DockerHub
 
-This project is an advanced to-do list web application with the basic features of most web apps, such as accounts/login, API, and interactive UI. 
-To complete this task, you will need:
+## Project Overview
 
-- CSS | [Skeleton](http://getskeleton.com/)
-- JS  | [jQuery](https://jquery.com/)
+This project extends the existing GitHub Actions CI workflow by automating the build and push of Docker images to DockerHub.  
+It enables packaging the application into a Docker container and securely uploading it to a DockerHub repository for easier deployment and distribution.
 
-## Getting Started
+## Tech Stack
 
-To begin, install the necessary requirements. Please note that these commands are compatible with Python 3.8 and higher due to the use of Django 4:
+- **GitHub Actions (CI/CD)**
+- **Docker**
+- **DockerHub Registry**
+- **GitHub Repository Secrets** for secure credentials management
 
-```
-pip install -r requirements.txt
-```
+## What was done
 
-Next, create a database schema:
+- Added a new job called `docker-ci` to the GitHub Actions workflow.  
+- Docker images are tagged with the current commit hash for traceability.  
+- DockerHub credentials are securely stored and accessed via GitHub Repository Secrets.  
+- The `docker-ci` job runs only on the `main` branch to ensure production readiness.  
+- Uploading artifacts from previous jobs is restricted to runs on the `main` branch.  
+- Steps in the `docker-ci` job include:  
+  1. Logging into DockerHub Registry.  
+  2. Building the Docker image using the provided `Dockerfile`.  
+  3. Pushing the tagged Docker image to the DockerHub Registry.  
 
-```
-python manage.py migrate
-```
-
-Finally, start the server (default is <http://localhost:8000>):
-
-```
-python manage.py runserver
-```
-
-You can now explore the [API](http://localhost:8000/api/) or start on the [landing page](http://localhost:8000/).
-
-## Task Description
-
-The task is to extend a GitHub Actions workflow for this project by adding a Docker build and push to the DockerHub Registry. The requirements for this task are as follows:
-
-1. The upload of the previous job's artifact should only be executed from the `main` branch.
-2. Add a `docker-ci` job to the workflow.
-3. The new job should only be executed from the `main` branch.
-4. The job should include the following steps:
-    1. Login to the DockerHub Registry.
-    2. Build and Push a Docker image to your existing DockerHub Registry. The image should be tagged with the current commit's hash.
-    3. Use the provided Dockerfile to build the image.
-5. Store DockerHub credentials using GitHub Repository Secrets.
-6. Create a pull request with the changes.
-7. The description of the pull request should contain a reference to a workflow run with a successful Docker CI job.
